@@ -1,11 +1,11 @@
 {
-  "name": "auth-snap-seek-backend",
+  "name": "auth-snap-seek",
   "version": "1.0.0",
   "description": "full-stack project using the MERN stack (MongoDB, Express.js, React.js, Node.js) and cation. This task evaluates your understanding of authentication, frontend/backend integration,",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
-  },
+  "start": "concurrently -c \"green,blue\" -n \"SERVER,CLIENT\" \"npm run start --prefix server\" \"npm run start --prefix client\""
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Mohdsohail7/Auth-Snap-Seek.git"
@@ -17,19 +17,6 @@
   },
   "homepage": "https://github.com/Mohdsohail7/Auth-Snap-Seek#readme",
   "dependencies": {
-    "axios": "^1.13.1",
-    "connect-mongo": "^5.1.0",
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "express": "^5.1.0",
-    "express-session": "^1.18.2",
-    "mongoose": "^8.19.2",
-    "passport": "^0.7.0",
-    "passport-facebook": "^3.0.0",
-    "passport-github2": "^0.1.12",
-    "passport-google-oauth20": "^2.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.10"
+    "concurrently": "^9.2.1"
   }
 }

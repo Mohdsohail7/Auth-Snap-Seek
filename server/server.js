@@ -2,7 +2,10 @@ const express = require("express");
 const connectDB = require("./config/database");
 const cors = require("cors");
 const passport = require("passport");
+const session = require('express-session');
+const MongoStore = require("connect-mongo");
 require("dotenv").config();
+require("./config/passport")(passport);
 
 
 // Import route files
@@ -14,14 +17,24 @@ const searchRoutes = require("./routes/searchRoutes");
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: process.env.CLIENT_URL || "http://localhost:3000",
+  credentials: true
+}));
 app.use(express.json());
 
 // Session + Passport setup
 app.use(session({
   secret: process.env.SESSION_SECRET || "secret",
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+  cookie: {
+    httpOnly: true,
+    secure: false, 
+    sameSite: "lax", 
+    maxAge: 1000 * 60 * 60 * 24
+  }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
