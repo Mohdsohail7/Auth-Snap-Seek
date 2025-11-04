@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { fetchCurrentUser } from '../api/apis';
+import { fetchCurrentUser, logoutUser } from '../api/apis';
 
 export const AuthContext = createContext();
 
@@ -18,12 +18,23 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // logout
+  const logout = async () => {
+    try {
+      await logoutUser();
+      setUser(null);
+      window.location.href = '/'; // redirect to home/login after logout
+    } catch (err) {
+      console.error('Logout failed:', err);
+    }
+  };
+
   useEffect(() => {
     fetchUser();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, refresh: fetchUser }}>
+    <AuthContext.Provider value={{ user, loading, refresh: fetchUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

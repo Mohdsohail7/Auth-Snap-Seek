@@ -1,15 +1,14 @@
-import React, { useContext, useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import LoadingScreen from '../components/LoadingScreen';
-import TopSearchesBanner from '../components/TopSearchesBanner';
-import AuthButton from '../components/AuthButton';
-import SearchBar from '../components/SearchBar';
-import ImageGrid from '../components/ImageGrid';
-import HistorySidebar from '../components/HistorySidebar';
-
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import LoadingScreen from "../components/LoadingScreen";
+import TopSearchesBanner from "../components/TopSearchesBanner";
+import AuthButton from "../components/AuthButton";
+import SearchBar from "../components/SearchBar";
+import ImageGrid from "../components/ImageGrid";
+import HistorySidebar from "../components/HistorySidebar";
 
 export default function HomePage() {
-  const { user, loading } = useContext(AuthContext);
+  const { user, loading, logout } = useContext(AuthContext);
   const [lastSearch, setLastSearch] = useState(null);
   const [selected, setSelected] = useState([]);
   const [searching, setSearching] = useState(false);
@@ -22,7 +21,38 @@ export default function HomePage() {
     <div className="relative min-h-screen p-6 font-sans bg-gray-50">
       {/* Header */}
       <header className="flex flex-col md:flex-row items-center justify-between mb-8 gap-6">
-        <h1 className="text-3xl font-bold text-gray-800">Image Search</h1>
+        <h1 className="text-3xl font-bold text-gray-800">Auth Snap Seek</h1>
+
+        {user && (
+          <div className="flex items-center gap-4">
+            {/* Avatar */}
+            {user.avatar && (
+              <img
+                src={user.avatar}
+                alt="User avatar"
+                className="w-10 h-10 rounded-full border border-gray-300"
+              />
+            )}
+
+            {/* Name + Email */}
+            <div className="flex flex-col">
+              <span className="text-gray-800 font-semibold leading-tight">
+                {user.displayName || 'User'}
+              </span>
+              <span className="text-sm text-gray-500 truncate max-w-[180px]">
+                {user.email || 'No email'}
+              </span>
+            </div>
+
+            {/* Logout Button */}
+            <button
+              onClick={() => logout()}
+              className="px-4 py-1 rounded-md bg-red-500 text-white text-sm hover:bg-red-600 transition"
+            >
+              Logout
+            </button>
+          </div>
+        )}
       </header>
 
       {/* Initial Home / Login Screen */}
@@ -32,7 +62,8 @@ export default function HomePage() {
             Welcome to Image Search
           </h2>
           <p className="text-gray-500 text-center max-w-md">
-            Log in using one of the providers below to start searching for amazing images.
+            Log in using one of the providers below to start searching for
+            amazing images.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <AuthButton />
@@ -57,7 +88,8 @@ export default function HomePage() {
             {lastSearch && (
               <div className="mt-4 space-y-2">
                 <div className="font-semibold text-gray-700">
-                  You searched for “{lastSearch.term}” — {lastSearch.count} results.
+                  You searched for “{lastSearch.term}” — {lastSearch.count}{" "}
+                  results.
                 </div>
                 <div className="text-sm text-gray-600">
                   Selected: {selected.length} images

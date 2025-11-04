@@ -13,10 +13,15 @@ exports.getCurrentUser = (req, res) => {
 };
 
 // Logout user
-exports.logoutUser = (req, res) => {
-  req.logout(() => {}); 
-  req.session.destroy((err) => {
+exports.logoutUser = (req, res, next) => {
+  if (!req.session) return res.status(400).json({ error: "No session found" });
+
+  req.logout(function(err) {
+    if (err) return next(err);
+
+    req.session.destroy((err) => {
     res.clearCookie("connect.sid");
     res.json({ ok: true });
   });
+  }); 
 };
