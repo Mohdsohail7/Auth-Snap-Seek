@@ -18,7 +18,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: process.env.CLIENT_URL || "http://localhost:3000",
+  origin: process.env.CLIENT_URL || "https://auth-snap-seek.vercel.app",
   credentials: true
 }));
 app.use(express.json());
@@ -46,7 +46,7 @@ app.use("/api", searchRoutes);
 
 // default route
 app.get("/", (req, res) => {
-  res.json({ message: "API is running..." });
+  res.json({ message: "APP is running..." });
 });
 
 const port = process.env.PORT

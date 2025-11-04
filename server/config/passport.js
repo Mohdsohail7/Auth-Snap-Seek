@@ -18,7 +18,7 @@ module.exports = function(passport) {
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: '/auth/google/callback'
+    callbackURL: 'https://auth-snap-seek-backend.onrender.com/auth/google/callback'
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
@@ -41,7 +41,7 @@ module.exports = function(passport) {
   passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: '/auth/github/callback',
+    callbackURL: 'https://auth-snap-seek-backend.onrender.com/auth/github/callback',
     scope: ['user:email']
   },
   async (accessToken, refreshToken, profile, done) => {
@@ -66,7 +66,7 @@ module.exports = function(passport) {
   passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: '/auth/facebook/callback',
+    callbackURL: 'https://auth-snap-seek-backend.onrender.com/auth/facebook/callback',
     profileFields: ['id', 'displayName', 'photos', 'email']
   },
   async (accessToken, refreshToken, profile, done) => {
