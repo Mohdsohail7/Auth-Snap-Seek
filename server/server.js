@@ -23,6 +23,8 @@ app.use(cors({
 }));
 app.use(express.json());
 
+app.set('trust proxy', 1);
+
 // Session + Passport setup
 app.use(session({
   secret: process.env.SESSION_SECRET || "secret",
@@ -31,8 +33,8 @@ app.use(session({
   store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
   cookie: {
     httpOnly: true,
-    secure: false, 
-    sameSite: "lax", 
+    secure: true, 
+    sameSite: "none", 
     maxAge: 1000 * 60 * 60 * 24
   }
 }));
